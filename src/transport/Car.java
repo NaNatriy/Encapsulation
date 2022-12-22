@@ -1,12 +1,6 @@
 package transport;
-import java.text.ParseException;
-import java.lang.reflect.Array;
-import java.text.SimpleDateFormat;
+
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Objects;
 
 public class Car {
     private final String brand;
@@ -19,9 +13,11 @@ public class Car {
     private final String bodyType;
     private int regisNumber;
     private final int seatsNumber;
-    private String rubber;
+    private boolean rubber;
+    int month = 9;
 
-    public Car(String brand, String model, double engineVolume, String color, int year, String country, String transmission, String bodyType, int regisNumber, int seatsNumber, String rubber) {
+
+    public Car(String brand, String model, double engineVolume, String color, int year, String country, String transmission, String bodyType, int regisNumber, int seatsNumber) {
         if (brand == null && brand.isBlank()) {
             this.brand = "default";
         } else {
@@ -72,26 +68,14 @@ public class Car {
         } else {
             this.seatsNumber = seatsNumber;
         }
-        if (rubber == null && rubber.isBlank()) {
-            this.rubber = "зимняя";
+        if (month == 1 || month == 2 || month == 12) {
+            setRubber(true);
+            //зимняя
         } else {
-            this.rubber = rubber;
+            setRubber(false);
+            //летняя
         }
 
-    }
-
-    public Car() {
-        this.brand = "default";
-        this.model = "default";
-        this.color = "белый";
-        this.country = "default";
-        this.engineVolume = 1.5;
-        this.year = 2000;
-        this.transmission = "default";
-        this.bodyType = "default";
-        this.regisNumber = 123;
-        this.seatsNumber = 2;
-        this.rubber = "зимняя";
     }
 
     @Override
@@ -101,26 +85,30 @@ public class Car {
 
     // task 2
     private class Key {
-        private final boolean remoteEngineStart = Boolean.parseBoolean("true");
-        private final boolean keylessAccess = Boolean.parseBoolean("true");
+        private boolean remoteEngineStart = Boolean.parseBoolean("true");
+        private boolean keylessAccess = Boolean.parseBoolean("false");
 
 
         public Key(boolean remoteEngineStart, boolean keylessAccess) {
+            this.remoteEngineStart = remoteEngineStart;
+            this.keylessAccess = keylessAccess;
         }
 
 
     }
 
-    public static class insurance {
+    public static class Insurance {
         private LocalDate duration;
         private final int price;
-        private int[] numInsurance = new int[9];
-        int length = Array.getLength(numInsurance);
+        private String numInsurance;
+        int length = numInsurance.length();
 
-        public insurance(LocalDate duration, int price, int numInsurance) {
 
-            if (duration == null) {
-                this.duration = LocalDate.now();
+        public Insurance(LocalDate duration, int price, String numInsurance) {
+
+
+            if (duration == null && duration.isBefore(LocalDate.now())) {
+                System.out.println("нужно срочно ехать оформлять новую страховку");
             } else {
                 this.duration = duration;
             }
@@ -131,26 +119,21 @@ public class Car {
                 this.price = price;
             }
 
-//            if (numInsurance == 0 && numInsurance < length) {
-//                System.out.println("Номер страховки некорректный!");
-//            } else {
-//                this.numInsurance = new int[]{numInsurance};
-//            }
+            if (length != 9) {
+                System.out.println("Номер страховки некорректный!");
+            } else {
+                this.numInsurance = numInsurance;
+            }
+
+
         }
-//        public void time() throws ParseException {
-//            Date date = new Date();
-//            Calendar calendar = Calendar.getInstance();
-//            calendar.setTime(date);
-//            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-//            System.out.println(simpleDateFormat.format((date)));
-//        }
 
         @Override
-        public String toString() {
+        public String valueOf() {
             return "insurance{" +
                     "duration=" + duration +
                     ", price=" + price +
-                    ", numInsurance=" + Arrays.toString(numInsurance) +
+                    ", numInsurance=" + (numInsurance) +
                     '}';
         }
 
@@ -162,7 +145,7 @@ public class Car {
             return price;
         }
 
-        public int[] getNumInsurance() {
+        public String getNumInsurance() {
             return numInsurance;
         }
     }
@@ -196,7 +179,11 @@ public class Car {
     }
 
     public void setEngineVolume(double engineVolume) {
-        this.engineVolume = engineVolume;
+        if (engineVolume == 0) {
+            this.engineVolume = 1.5;
+        } else {
+            this.engineVolume = engineVolume;
+        }
     }
 
     public String getColor() {
@@ -204,7 +191,11 @@ public class Car {
     }
 
     public void setColor(String color) {
-        this.color = color;
+        if (color == null && color.isBlank()) {
+            this.color = "белый";
+        } else {
+            this.color = color;
+        }
     }
 
     public String getTransmission() {
@@ -212,7 +203,11 @@ public class Car {
     }
 
     public void setTransmission(String transmission) {
-        this.transmission = transmission;
+        if (transmission == null && transmission.isBlank()) {
+            this.transmission = "default";
+        } else {
+            this.transmission = transmission;
+        }
     }
 
     public int getRegisNumber() {
@@ -220,15 +215,23 @@ public class Car {
     }
 
     public void setRegisNumber(int regisNumber) {
-        this.regisNumber = regisNumber;
+        if (regisNumber == 0) {
+            this.regisNumber = 123;
+        } else {
+            this.regisNumber = regisNumber;
+        }
     }
 
-    public String getRubber() {
+    public boolean getRubber() {
         return rubber;
     }
 
-    public void setRubber(String rubber) {
+    public void setRubber(boolean rubber) {
         this.rubber = rubber;
+        if (rubber == true) {
+        } else {
+
+        }
     }
 
 }
