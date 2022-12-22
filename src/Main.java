@@ -1,5 +1,4 @@
 import transport.Car;
-
 import java.time.LocalDate;
 
 public class Main {

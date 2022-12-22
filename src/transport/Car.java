@@ -94,7 +94,6 @@ public class Car {
             this.keylessAccess = keylessAccess;
         }
 
-
     }
 
     public static class Insurance {
@@ -129,7 +128,7 @@ public class Car {
         }
 
         @Override
-        public String valueOf() {
+        public String toString() {
             return "insurance{" +
                     "duration=" + duration +
                     ", price=" + price +
@@ -235,4 +234,3 @@ public class Car {
     }
 
 }
-
